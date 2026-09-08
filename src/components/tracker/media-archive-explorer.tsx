@@ -4,7 +4,6 @@
 
 import {
   AlertTriangleIcon,
-  ArrowLeftIcon,
   ArrowUpRightIcon,
   CalendarArrowDownIcon,
   ChevronDownIcon,
@@ -16,10 +15,10 @@ import {
   RefreshCwIcon,
   SearchIcon,
 } from "lucide-react";
-import Link from "next/link";
 import { useMemo, useState, type FormEvent } from "react";
 
-import { ThemeToggle } from "@/components/theme-toggle";
+import { MediaHeader } from "./media-header";
+import { FolderPicker } from "@/components/folders/folder-picker";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -97,9 +96,11 @@ function previewUrl(item: ArchiveMediaItem): string | undefined {
 
 function MediaCard({
   item,
+  jobId,
   onOpen,
 }: {
   item: ArchiveMediaItem;
+  jobId: string;
   onOpen: (item: ArchiveMediaItem) => void;
 }) {
   const preview = previewUrl(item);
@@ -155,6 +156,7 @@ function MediaCard({
             <ArrowUpRightIcon className="size-3" aria-hidden />
           </a>
         </div>
+        <FolderPicker media={{ source: "x", id: item.id, jobId }} />
       </div>
     </article>
   );
@@ -314,7 +316,7 @@ function ArchiveResults({ result, jobId, onRepair }: { result: MediaArchiveResul
           </p>
           <div className="mt-3 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {visibleItems.map((item) => (
-              <MediaCard key={item.id} item={item} onOpen={(item) => { setSelected(item); setRepairError(null); }} />
+              <MediaCard key={item.id} item={item} jobId={jobId} onOpen={(item) => { setSelected(item); setRepairError(null); }} />
             ))}
           </div>
           {visibleItems.length < filteredItems.length && (
@@ -339,7 +341,7 @@ function ArchiveResults({ result, jobId, onRepair }: { result: MediaArchiveResul
       )}
 
       <Sheet open={selected !== null} onOpenChange={(open) => !open && setSelected(null)}>
-        <SheetContent className="w-full gap-0 overflow-hidden p-0 data-[side=right]:sm:max-w-2xl">
+        <SheetContent className="gap-0 overflow-hidden p-0 data-[side=right]:w-full data-[side=right]:sm:max-w-2xl">
           {selected && (
             <>
               <SheetHeader className="border-b p-5 pr-14">
@@ -365,6 +367,7 @@ function ArchiveResults({ result, jobId, onRepair }: { result: MediaArchiveResul
                   </div>
                 )}
                 <p className="mt-5 text-base leading-7 text-foreground/90">{selected.postText}</p>
+                <div className="mt-4"><FolderPicker key={selected.id} media={{ source: "x", id: selected.id, jobId }} /></div>
                 <Button
                   className="mt-5"
                   variant="outline"
@@ -393,27 +396,7 @@ export function MediaArchiveExplorer() {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="sticky top-0 z-40 border-b bg-background/90 backdrop-blur-md">
-        <div className="mx-auto flex h-16 max-w-7xl items-center gap-3 px-4 sm:px-6 lg:px-8">
-          <Link href="/" aria-label="X Media home" className="flex min-w-0 items-center gap-3 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-            <span className="relative flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-blue-500/20 bg-blue-500/10 text-blue-700 dark:text-blue-300">
-              <PlayIcon className="relative z-10 size-5" aria-hidden />
-              <span aria-hidden className="absolute inset-0 bg-[radial-gradient(circle_at_85%_10%,rgba(27,175,122,0.34),transparent_58%)]" />
-            </span>
-            <span>
-              <span className="block font-semibold tracking-tight">X Media</span>
-              <span className="block text-xs text-muted-foreground">Media archive</span>
-            </span>
-          </Link>
-          <div className="ml-auto flex items-center gap-2">
-            <Button variant="ghost" nativeButton={false} render={<Link href="/dashboard" aria-label="Dashboard" />}>
-              <ArrowLeftIcon data-icon="inline-start" aria-hidden />
-              <span className="hidden sm:inline">Dashboard</span>
-            </Button>
-            <ThemeToggle />
-          </div>
-        </div>
-      </header>
+      <MediaHeader />
 
       <section className="mx-auto max-w-3xl px-4 pt-14 pb-2 text-center sm:px-6 sm:pt-20">
         <h1 className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl">

@@ -1,6 +1,6 @@
 # X Media
 
-**Find public X (Twitter) videos, photos, and GIFs by username. Keep a media library on your own computer. No login or API key required.**
+**Browse X media, search tweet history, and collect Reddit memes in one local workspace. Media, tweets, and Reddit collection need no API key or paid subscription.**
 
 X Media is a local web app for browsing an account's available public media. Enter a username, watch results arrive, and switch between videos, photos, GIFs, newest, and oldest. Saved collections reopen without another request to X.
 
@@ -10,6 +10,9 @@ The archive uses the [FxTwitter public media timeline](https://docs.fxembed.com/
 
 ## Features
 
+- **Tweets explorer:** browse original public tweets for free at `/posts`, with recent, oldest, popular, and short banger views. Replies, reposts, and quote posts are excluded from every view, account count, and export. Import an X archive to add older posts, and export saved originals as JSON. Collection saves resumable progress and clearly labels incomplete history. See [Tweets explorer](docs/POSTS.md).
+- **Shared folders:** organize X attachments and Reddit memes together, place an item in multiple folders, search or filter folder contents, and rename or remove folders.
+- **Reddit collection:** the Reddit source tab opens the integrated meme collector, with search, community and rank filters, saved favorites, review and undo, image copying/downloads, recommendation batches, and TV playback.
 - **Username search:** public X / Twitter media without signing in, cookies, or a paid API.
 - **Video, photo, and GIF browser:** all attachments returned for each collected post, with type filters and latest/oldest sorting.
 - **Local library:** saved media records survive app restarts; refreshes merge discoveries without erasing older results.
@@ -22,7 +25,7 @@ The archive uses the [FxTwitter public media timeline](https://docs.fxembed.com/
 
 ## Quick start
 
-Install **Node.js 22.13 or newer**, Git, and **pnpm 11.21.0**. Use the pinned pnpm version for the included lockfile.
+Install **Node.js 26 or newer**, Git, and **pnpm 11.21.0**. Use the pinned pnpm version for the included lockfile. Reddit storage uses Node's built-in SQLite.
 
 ```sh
 npm install --global pnpm@11.21.0
@@ -34,6 +37,12 @@ pnpm dev
 
 Open **[http://127.0.0.1:3000](http://127.0.0.1:3000)**, enter a public username, and select **Find media**. No `.env` file is needed for the archive. Internet access is required to collect new results or play remote media. The build also fetches the Geist fonts through Next.js.
 
+Select **Reddit** in the header to browse memes. X Media starts and supervises its bundled Reddit collector; a separate Reddit app is unnecessary. See [Reddit integration and migration](docs/REDDIT.md).
+
+Select **Tweets**, enter a public username, and choose **Find tweets**. No login, API key, or credits are needed. **Import archive** accepts `account.js` plus `tweets.js` from an extracted X archive, or an X Media JSON export. Public timelines may omit older posts; full account history is not guaranteed.
+
+Select **Folders** on a media card or in its viewer, create or select folders, then **Save folders**. Open **Folders** in the header to browse your collections. Uncheck one folder and check another to move an item. Deleting a folder or removing a placement preserves the source collection and other folders. See [folder storage and testing](docs/FOLDERS.md).
+
 The commands work in PowerShell, macOS, and Linux shells. The default server binds to `127.0.0.1`, so it is reachable on your own computer. If port 3000 is occupied, run `pnpm dev --port 3101` and open that port instead.
 
 ### Run a production build locally
@@ -44,6 +53,8 @@ pnpm start
 ```
 
 Run one server per project/data directory. Stop the development server before starting production. For another port, use `pnpm start --port 3101`.
+
+On Windows, run `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run-x-media.ps1 -Open` to start the built app and open it. The launcher reuses an existing server. Tweets reconnects automatically during startup or a brief outage; displayed results remain available while it reconnects.
 
 ### Update an existing installation
 
@@ -75,10 +86,14 @@ A queued, waiting, or failed search with no results does not establish that an a
 | --- | --- | --- |
 | Archive library and jobs | `.data/archive-jobs/state.json` | Account details, post text, media URLs, progress, and resume cursors |
 | Queue ownership | `.data/archive-jobs/process.lock` | Lock for the single running archive server |
+| Shared folders | `.data/folders/state.json` | Folder names, memberships, and saved media metadata |
+| Foldered Reddit originals | `.data/folders/assets` | Original image copies protected from collector cache eviction |
 | Optional tracker | `.data/tracker-state.json` | Watchlist, retained posts, metrics, and workflow state |
+| Tweets explorer | `.data/posts/state.json` | Full post text, profiles, engagement counts, collection jobs, and resume cursors |
+| Legacy Tweets API connection | `.data/posts/connection.json` | Unused by free collection; old copies may contain a secret, so keep backups private |
 | Browser state | Local storage and memory | Last selected job, theme, and a bounded cache of recent collections |
 
-**Saved library records are not offline video downloads.** Images and video files remain on remote media servers and load when viewed. The app does not automatically download every video file, offer bulk file export, or guarantee that an old media URL will keep working.
+**Saved X library records are not offline video downloads.** X images and videos remain on remote media servers and load when viewed. The app does not automatically download every video file, offer bulk file export, or guarantee that an old media URL will keep working. Reddit originals added to folders are copied locally and remain available independently of the collector cache.
 
 When run on your PC, the library is saved on that PC. If you run the server elsewhere, it is saved on that server. To back up or move your library, stop the app and copy the entire `.data` folder. Restart one server against the restored directory. An unreadable archive state file is preserved for recovery instead of silently replaced.
 

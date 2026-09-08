@@ -12,6 +12,7 @@ export default defineConfig({
     },
   },
   test: {
+    include: ["src/**/*.test.ts", "scripts/**/*.test.mjs"],
     coverage: {
       provider: "v8",
       reporter: ["text", "json-summary"],

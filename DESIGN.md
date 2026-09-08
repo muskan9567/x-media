@@ -259,6 +259,10 @@ X Media uses gently rounded rectangles, not capsules, as its dominant silhouette
 
 Navigation uses a 64px structural rail or header, one-pixel separators, compact semibold labels, and muted inactive items. Active destinations gain Quiet Fill and primary ink, sometimes with Ambient XS elevation. The X Media identity mark is a rounded blue-tinted tile with a play icon and a restrained green radial glint; desktop presents the wordmark and context line, while narrow headers may show the mark alone.
 
+The shared media header retains the X, Tweets, Reddit, and Folders text destinations at every width, alongside Dashboard and the theme toggle. Below 768px the wordmark and context line disappear; below 640px the identity mark and navigation spacing tighten and Dashboard becomes a labeled icon. All destinations and both utility controls remain reachable at 320px.
+
+The Tweets page presents free public collection and an expandable archive import form in the existing compact panel. Keep history limits visible alongside the account's saved count. Connection failures give a recovery action and preserve visible results. At mobile widths, tweet text and editable filter fields use at least 16px type; the file picker and collection actions wrap within the page gutters.
+
 ### Media Archive Card
 
 The media card is the signature visual bridge between data and source material. A 4:3 preview fills the top of a bordered card, the asset type sits in a small black translucent label over the image, and post text plus date remain compact below. Hover scales the image only to 1.02 over 300ms and raises the card by one shadow step; the treatment should feel inspectable, not cinematic.
